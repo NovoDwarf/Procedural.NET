@@ -1,0 +1,181 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Procedural.NET.Designer.Controls"
+        xmlns:viewModels="clr-namespace:Procedural.NET.Designer.ViewModels"
+        x:Class="Procedural.NET.Designer.MainWindow"
+        Title="Procedural.NET &#1044;&#1080;&#1079;&#1072;&#1081;&#1085;&#1077;&#1088;"
+        Width="1280"
+        Height="820"
+        MinWidth="980"
+        MinHeight="640"
+        x:DataType="viewModels:MainWindowViewModel">
+  <Design.DataContext>
+    <x:Null />
+  </Design.DataContext>
+
+  <Grid RowDefinitions="42,*" Background="#17191c">
+    <Border Grid.Row="0" Background="#202329" BorderBrush="#30343c" BorderThickness="0,0,0,1">
+      <Grid ColumnDefinitions="Auto,*,Auto" Margin="12,0">
+        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+          <Button Command="{Binding NewCommand}" Content="&#1053;&#1086;&#1074;&#1099;&#1081;" />
+          <Button Command="{Binding SaveCommand}" Content="&#1057;&#1086;&#1093;&#1088;&#1072;&#1085;&#1080;&#1090;&#1100;" />
+          <Button Command="{Binding LoadCommand}" Content="&#1047;&#1072;&#1075;&#1088;&#1091;&#1079;&#1080;&#1090;&#1100;" />
+        </StackPanel>
+
+        <TextBlock Grid.Column="1"
+                   Text="{Binding StatusText}"
+                   VerticalAlignment="Center"
+                   Foreground="#aeb6c2"
+                   FontSize="13"
+                   Margin="16,0" />
+
+        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+          <ComboBox Width="132"
+                    ItemsSource="{Binding PreviewTextureModes}"
+                    SelectedItem="{Binding SelectedPreviewTextureMode}" />
+          <ComboBox Width="150"
+                    ItemsSource="{Binding ComputeBackends}"
+                    SelectedItem="{Binding SelectedComputeBackend}" />
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <Grid Grid.Row="1" ColumnDefinitions="280,*,340">
+      <Border Grid.Column="0" Background="#1d2025" BorderBrush="#30343c" BorderThickness="0,0,1,0">
+        <Grid RowDefinitions="36,*">
+          <TextBlock Text="&#1041;&#1080;&#1073;&#1083;&#1080;&#1086;&#1090;&#1077;&#1082;&#1072;"
+                     Margin="14,0"
+                     VerticalAlignment="Center"
+                     FontWeight="SemiBold"
+                     Foreground="#f0f3f6" />
+          <TreeView Grid.Row="1"
+                    ItemsSource="{Binding Library}"
+                    SelectedItem="{Binding SelectedLibraryItem}"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Margin="8,4,8,8">
+            <TreeView.ItemTemplate>
+              <TreeDataTemplate ItemsSource="{Binding Children}">
+                <Grid ColumnDefinitions="12,*" MinHeight="28" Margin="2">
+                  <Border Width="8"
+                          Height="8"
+                          CornerRadius="4"
+                          Background="{Binding ColorBrush}"
+                          IsVisible="{Binding HasColor}"
+                          VerticalAlignment="Center" />
+                  <TextBlock Grid.Column="1"
+                             Text="{Binding Name}"
+                             Foreground="#e6ebf2"
+                             FontSize="13"
+                             VerticalAlignment="Center"
+                             Margin="8,0,0,0" />
+                </Grid>
+              </TreeDataTemplate>
+            </TreeView.ItemTemplate>
+          </TreeView>
+        </Grid>
+      </Border>
+
+      <TabControl Grid.Column="1" Background="#17191c" Margin="0">
+        <TabItem Header="&#1056;&#1077;&#1076;&#1072;&#1082;&#1090;&#1086;&#1088;">
+          <Grid RowDefinitions="34,*">
+            <TabControl Grid.Row="0"
+                        ItemsSource="{Binding Sessions}"
+                        SelectedItem="{Binding SelectedSession}">
+              <TabControl.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+              </TabControl.ItemTemplate>
+            </TabControl>
+
+            <controls:GraphCanvas Grid.Row="1"
+                                  Nodes="{Binding Nodes}"
+                                  Connections="{Binding Connections}"
+                                  ConnectionRequestedCommand="{Binding ConnectionRequestedCommand}"
+                                  SelectedNode="{Binding SelectedNode}">
+              <controls:GraphCanvas.ContextMenu>
+                <ContextMenu>
+                  <MenuItem Header="&#1050;&#1086;&#1087;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100;" Command="{Binding CopyCommand}" />
+                  <MenuItem Header="&#1042;&#1089;&#1090;&#1072;&#1074;&#1080;&#1090;&#1100;" Command="{Binding PasteCommand}" />
+                  <MenuItem Header="&#1044;&#1091;&#1073;&#1083;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100;" Command="{Binding DuplicateCommand}" />
+                  <Separator />
+                  <MenuItem Header="&#1059;&#1076;&#1072;&#1083;&#1080;&#1090;&#1100;" Command="{Binding DeleteCommand}" />
+                </ContextMenu>
+              </controls:GraphCanvas.ContextMenu>
+            </controls:GraphCanvas>
+          </Grid>
+        </TabItem>
+
+        <TabItem Header="2D">
+          <Border Background="#111317" Padding="12">
+            <controls:PreviewSurface Node="{Binding ActivePreviewNode}"
+                                     TextureMode="{Binding SelectedPreviewTextureMode}"
+                                     HighResolution="True" />
+          </Border>
+        </TabItem>
+
+        <TabItem Header="3D">
+          <Border Background="#111317" Padding="12">
+            <controls:PreviewSurface Node="{Binding ActivePreviewNode}"
+                                     IsThreeD="True"
+                                     TextureMode="{Binding SelectedPreviewTextureMode}"
+                                     HighResolution="True" />
+          </Border>
+        </TabItem>
+      </TabControl>
+
+      <Border Grid.Column="2" Background="#1d2025" BorderBrush="#30343c" BorderThickness="1,0,0,0">
+        <Grid RowDefinitions="250,*">
+          <Grid RowDefinitions="32,*" Margin="12,10,12,8">
+            <TextBlock Text="&#1055;&#1088;&#1077;&#1074;&#1100;&#1102;"
+                       VerticalAlignment="Center"
+                       FontWeight="SemiBold"
+                       Foreground="#f0f3f6" />
+            <TabControl Grid.Row="1">
+              <TabItem Header="2D">
+                <controls:PreviewSurface Node="{Binding ActivePreviewNode}"
+                                         TextureMode="{Binding SelectedPreviewTextureMode}"
+                                         HighResolution="True" />
+              </TabItem>
+              <TabItem Header="3D">
+                <controls:PreviewSurface Node="{Binding ActivePreviewNode}"
+                                         IsThreeD="True"
+                                         TextureMode="{Binding SelectedPreviewTextureMode}"
+                                         HighResolution="True" />
+              </TabItem>
+            </TabControl>
+          </Grid>
+
+          <Grid Grid.Row="1" RowDefinitions="36,*">
+            <TextBlock Text="&#1048;&#1085;&#1092;&#1086;"
+                       Margin="14,0"
+                       VerticalAlignment="Center"
+                       FontWeight="SemiBold"
+                       Foreground="#f0f3f6" />
+            <ScrollViewer Grid.Row="1">
+              <StackPanel Margin="14" Spacing="10">
+                <TextBlock Text="{Binding InspectorTitle}" Foreground="#f0f3f6" FontSize="17" />
+                <TextBlock Text="{Binding InspectorSubtitle}" Foreground="#8d96a3" TextWrapping="Wrap" />
+                <TextBlock Text="{Binding SelectedNodeStatus}" Foreground="#82d29a" />
+
+                <ItemsControl ItemsSource="{Binding InspectorParameters}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <Grid RowDefinitions="Auto,Auto" Margin="0,0,0,10">
+                        <TextBlock Text="{Binding Label}" Foreground="#ccd3dc" />
+                        <TextBox Grid.Row="1"
+                                 Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,4,0,0" />
+                      </Grid>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+            </ScrollViewer>
+          </Grid>
+        </Grid>
+      </Border>
+    </Grid>
+  </Grid>
+</Window>

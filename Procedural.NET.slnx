@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Sources/">
+    <Project Path="Sources/Procedural.NET.Core/Procedural.NET.Core.csproj" />
+    <Project Path="Sources/Procedural.NET.Designer/Procedural.NET.Designer.csproj" />
+    <Project Path="Sources/Procedural.NET.Nodes.Spatial/Procedural.NET.Nodes.Spatial.csproj" />
+    <Project Path="Sources/Procedural.NET.Nodes.Terrain/Procedural.NET.Nodes.Terrain.csproj" />
+    <Project Path="Sources/Procedural.NET.Nodes/Procedural.NET.Nodes.csproj" />
+    <Project Path="Sources/Procedural.NET.Storage/Procedural.NET.Storage.csproj" />
+    <Project Path="Sources/Procedural.NET/Procedural.NET.csproj" />
+  </Folder>
+</Solution>
