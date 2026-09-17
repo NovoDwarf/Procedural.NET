@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net11.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <TargetFrameworks>$(ProjectTargetFrameworks)</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Shared\NovoDwarf.Primitives\NovoDwarf.Primitives.csproj" />
-      <ProjectReference Include="..\Procedural.NET.Core\Procedural.NET.Core.csproj" />
-      <ProjectReference Include="..\Procedural.NET.Storage\Procedural.NET.Storage.csproj" />
+      <PackageReference Include="Procedural.NET.Storage" Version="1.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Terrain\Generators\" />
     </ItemGroup>
 
 </Project>

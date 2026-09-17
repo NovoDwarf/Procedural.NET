@@ -1,0 +1,48 @@
+<Project>
+
+    <PropertyGroup>
+        <LocalNugetRepository>F:\nugets</LocalNugetRepository>
+        <NugetArtifacts>$(MSBuildProjectDirectory)\bin\$(Configuration)</NugetArtifacts>
+    </PropertyGroup>
+
+    <Target Name="PublishLocalNuget"
+            AfterTargets="Pack"
+            Condition="'$(IsPackable)' == 'true' and '$(Configuration)' == 'Debug'">
+
+        <PropertyGroup>
+            <CurrentPackageRepository>
+                $([System.IO.Path]::Combine('$(LocalNugetRepository)', '$(PackageId)'))
+            </CurrentPackageRepository>
+        </PropertyGroup>
+
+        <Message
+                Text="Publishing $(PackageId) $(PackageVersion) to local NuGet repository..."
+                Importance="High" />
+
+        <MakeDir Directories="$(CurrentPackageRepository)" />
+
+        <ItemGroup>
+            <LocalPackages
+                    Include="$(PackageOutputPath)$(PackageId).$(PackageVersion).nupkg"
+                    Condition="Exists('$(PackageOutputPath)$(PackageId).$(PackageVersion).nupkg')" />
+
+            <LocalSymbols
+                    Include="$(PackageOutputPath)$(PackageId).$(PackageVersion).snupkg"
+                    Condition="Exists('$(PackageOutputPath)$(PackageId).$(PackageVersion).snupkg')" />
+        </ItemGroup>
+
+        <Copy
+                SourceFiles="@(LocalPackages)"
+                DestinationFolder="$(CurrentPackageRepository)"
+                SkipUnchangedFiles="false"
+                Condition="'@(LocalPackages)' != ''" />
+
+        <Copy
+                SourceFiles="@(LocalSymbols)"
+                DestinationFolder="$(CurrentPackageRepository)"
+                SkipUnchangedFiles="false"
+                Condition="'@(LocalSymbols)' != ''" />
+
+    </Target>
+
+</Project>

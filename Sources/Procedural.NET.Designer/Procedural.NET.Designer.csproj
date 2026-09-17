@@ -2,30 +2,22 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net11.0</TargetFramework>
-        <Nullable>enable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>
+        <TargetFrameworks>$(ProjectTargetFrameworks)</TargetFrameworks>
+        <IsPackable>false</IsPackable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="12.0.5" />
-        <PackageReference Include="Avalonia.Desktop" Version="12.0.5" />
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.5" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.5" />
+        <PackageReference Include="Avalonia" Version="12.1.2" />
+        <PackageReference Include="Avalonia.Desktop" Version="12.1.2" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.2" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.2" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+        <PackageReference Include="Procedural.NET.Nodes" Version="1.0.0" />
         <PackageReference Include="Silk.NET.GLFW" Version="2.23.0" />
         <PackageReference Include="Silk.NET.OpenGL" Version="2.23.0" />
     </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Procedural.NET.Core\Procedural.NET.Core.csproj" />
-        <ProjectReference Include="..\Procedural.NET.Nodes\Procedural.NET.Nodes.csproj" />
-        <ProjectReference Include="..\Procedural.NET.Nodes.Spatial\Procedural.NET.Nodes.Spatial.csproj" />
-        <ProjectReference Include="..\Procedural.NET.Nodes.Terrain\Procedural.NET.Nodes.Terrain.csproj" />
-        <ProjectReference Include="..\Procedural.NET.Storage\Procedural.NET.Storage.csproj" />
-    </ItemGroup>
-
+    
 </Project>

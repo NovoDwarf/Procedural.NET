@@ -1,0 +1,27 @@
+<Project>
+
+    <PropertyGroup>
+        <ProjectTargetFrameworks>net10.0;net11.0</ProjectTargetFrameworks>
+        <ProjectVersion>1.0.0</ProjectVersion>
+        <ProjectAssemblyVersion>1.0.0.0</ProjectAssemblyVersion>
+        <ProjectAuthors>NovoDwarf</ProjectAuthors>
+        <ProjectCopyright>NovoDwarf</ProjectCopyright>
+        <ProjectRepositoryUrl>https://github.com/NovoDwarf/Procedural.NET</ProjectRepositoryUrl>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(IsPackable)' != 'false'">
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>$(ProjectAuthors)</Authors>
+        <Copyright>$(ProjectCopyright)</Copyright>
+        <PackageProjectUrl>$(ProjectRepositoryUrl)</PackageProjectUrl>
+        <RepositoryUrl>$(ProjectRepositoryUrl)</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+</Project>
