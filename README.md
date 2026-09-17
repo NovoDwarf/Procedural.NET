@@ -38,14 +38,13 @@ Procedural.NET
 ```
 
 ## Roadmap
+
 - Redesign the current architecture and project structure.
-- Implement custom procedural nodes using MathForge.
-- Introduce declarative node and graph definitions through Grekov.
-- Develop GPU-accelerated node implementations using Slang shaders.
+- Implement custom procedural nodes using [MathForge](https://github.com/NovoDwarf/MathForge).
+- Introduce declarative node and graph definitions through [Grekov](https://github.com/NovoDwarf/Grekov).
+- Develop GPU-accelerated node implementations using Slang shaders (for Godot → [NovoDwarf.Godot.Slang](https://github.com/NovoDwarf/NovoDwarf.Projects)).
 - Integrate GPU execution into the procedural processing pipeline.
 - Expand beyond terrain generation into a general-purpose procedural toolkit.
-- 
-
 
 ## License
 
