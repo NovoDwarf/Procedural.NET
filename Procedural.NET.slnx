@@ -8,4 +8,7 @@
     <Project Path="Sources/Procedural.NET.Storage/Procedural.NET.Storage.csproj" />
     <Project Path="Sources/Procedural.NET/Procedural.NET.csproj" />
   </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/Procedural.NET.Tests/Procedural.NET.Tests.csproj" />
+  </Folder>
 </Solution>

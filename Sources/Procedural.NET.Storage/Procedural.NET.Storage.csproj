@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Procedural.NET.Core" Version="1.0.0" />
+      <ProjectReference Include="..\Procedural.NET.Core\Procedural.NET.Core.csproj" />
     </ItemGroup>
     
 </Project>
