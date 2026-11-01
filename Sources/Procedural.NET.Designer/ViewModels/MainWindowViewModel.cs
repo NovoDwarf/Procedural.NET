@@ -275,6 +275,14 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 		if (!_document.TryConnect(output.Id, outputPortKey, input.Id, inputPortKey))
 			return false;
 
+        for (var index = Connections.Count - 1; index >= 0; index--)
+        {
+            var connection = Connections[index];
+
+            if (connection.Input.Id == input.Id && connection.InputPortKey == inputPortKey)
+                Connections.RemoveAt(index);
+        }
+
 		Connections.Add(new GraphConnectionViewModel(output, outputPortKey, input, inputPortKey));
 		return true;
 	}
