@@ -21,29 +21,13 @@ public sealed class GraphSessionService
 		
 		var session = new GraphSession
 		{
-			Metadata =
-			{
-				Author = document.Metadata.Author,
-				Description = document.Metadata.Description,
-				Seed = document.Metadata.Seed,
-				GeneratorVersion = document.Metadata.GeneratorVersion,
-				AreaWidth = document.Metadata.AreaWidth,
-				AreaHeight = document.Metadata.AreaHeight,
-				OriginX = document.Metadata.OriginX,
-				OriginY = document.Metadata.OriginY,
-				AspectRatio = document.Metadata.AspectRatio,
-				BuildResolutionPower = document.Metadata.BuildResolutionPower,
-				BuildResolutionMode = document.Metadata.BuildResolutionMode,
-				SeaLevel = document.Metadata.SeaLevel,
-				ColorPreset = document.Metadata.ColorPreset,
-				Units = document.Metadata.Units,
-				RescalingMode = document.Metadata.RescalingMode,
-				Name = string.IsNullOrWhiteSpace(currentPath)
-					? "Untitled"
-					: Path.GetFileNameWithoutExtension(currentPath),
-				ModifiedUtc = now
-			}
+            Metadata = CloneMetadata(document.Metadata)
 		};
+
+        session.Metadata.Name = string.IsNullOrWhiteSpace(currentPath)
+            ? "Untitled"
+            : Path.GetFileNameWithoutExtension(currentPath);
+        session.Metadata.ModifiedUtc = now;
 
 		foreach (var node in document.Nodes)
 			session.Nodes.Add(CaptureNode(node));
