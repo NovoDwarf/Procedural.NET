@@ -32,10 +32,16 @@ public abstract class UnaryNode : BaseNode, ISampledExecutor, IFieldExecutor
 		var aField = graph.RequireFieldInput(model, PortKeys.A, width, height);
 		var result = new Field(width, height);
 		
-		for (var y = 0; y < height; y++)
-		for (var x = 0; x < width; x++)
-			result[x, y] = Transform(aField[x, y], key => graph.GetParameter(model, key, width, height));
+        for (var y = 0; y < height; y++)
+        for (var x = 0; x < width; x++)
+        {
+	        var u = width <= 1 ? 0f : x / (float)(width - 1);
+	        var v = height <= 1 ? 0f : y / (float)(height - 1);
+	        var context = new EvaluationContext(u, v);
+
+	        result[x, y] = Transform(aField[x, y], key => graph.GetParameter(model, key, context));
+        }
 		
-		return result;
+        return result;
 	}
 }
