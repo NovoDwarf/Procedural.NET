@@ -7,7 +7,7 @@ internal sealed class GraphConnection
 	private readonly Dictionary<GraphPort, GraphPort> _forward = [];
 	
 	private readonly Dictionary<Guid, HashSet<Guid>> _upstream = [];
-	private readonly Dictionary<Guid, HashSet<Guid>> _downstream = [];
+    private readonly Dictionary<Guid, Dictionary<Guid, int>> _downstream = [];
 
 	public bool TryGetOutput(Guid inputNodeId, string inputPortKey, out GraphPort output) =>
 		_forward.TryGetValue(new GraphPort(inputNodeId, inputPortKey), out output);
@@ -108,27 +108,36 @@ internal sealed class GraphConnection
 		return toRemove.Count;
 	}
 	
-	private void AddLink(Guid outputNodeId, Guid inputNodeId)
-	{
-		if (!_downstream.TryGetValue(outputNodeId, out var set))
-			_downstream[outputNodeId] = set = [];
+    private void AddLink(Guid outputNodeId, Guid inputNodeId)
+    {
+        if (!_downstream.TryGetValue(outputNodeId, out var targets))
+            _downstream[outputNodeId] = targets = [];
+        
+        targets[inputNodeId] = targets.GetValueOrDefault(inputNodeId) + 1;
 
-		set.Add(inputNodeId);
+        if (!_upstream.TryGetValue(inputNodeId, out var parents))
+            _upstream[inputNodeId] = parents = [];
+        
+        parents.Add(outputNodeId);
+    }
 
-		if (!_upstream.TryGetValue(inputNodeId, out var parents))
-			_upstream[inputNodeId] = parents = [];
+    private void RemoveLink(Guid outputNodeId, Guid inputNodeId)
+    {
+        if (!_downstream.TryGetValue(outputNodeId, out var targets) ||
+            !targets.TryGetValue(inputNodeId, out var count))
+            return;
+        
+        if (count > 1)
+        {
+            targets[inputNodeId] = count - 1;
+            return;
+        }
 
-		parents.Add(outputNodeId);
-	}
+        targets.Remove(inputNodeId);
 
-	private void RemoveLink(Guid outputNodeId, Guid inputNodeId)
-	{
-		if (_downstream.TryGetValue(outputNodeId, out var set))
-			set.Remove(inputNodeId);
-
-		if (_upstream.TryGetValue(inputNodeId, out var parents))
-			parents.Remove(outputNodeId);
-	}
+        if (_upstream.TryGetValue(inputNodeId, out var parents))
+            parents.Remove(outputNodeId);
+    }
 
 	private HashSet<Guid> TraverseUpstream(Guid start)
 	{
@@ -167,7 +176,7 @@ internal sealed class GraphConnection
 			if (!_downstream.TryGetValue(queue.Dequeue(), out var set))
 				continue;
 
-			foreach (var id in set)
+			foreach (var id in set.Keys)
 				if (visited.Add(id))
 					queue.Enqueue(id);
 		}
